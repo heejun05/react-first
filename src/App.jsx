@@ -77,16 +77,22 @@
 // -----------------------------
 //문자값 변경
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './style.scss';
 
 function App() {
-	const [Degree, setDegree] = useState(0);
+	const [Colors, setColors] = useState(['red', 'green', 'blue']);
+	const newColors = [...Colors];
+	newColors[0] = 'hotpink';
+
 	return (
 		<>
-			<button onClick={() => setDegree(Degree - 45)}>왼쪽으로 회전</button>
-			<button onClick={() => setDegree(Degree + 45)}>오른쪽으로 회전</button>
-			<article style={{ transform: `rotate(${Degree}deg)` }}>{Degree}</article>
+			{Colors.map((color, idx) => (
+				<button style={{ backgroundColor: color }} key={idx}>
+					{color}
+				</button>
+			))}
+			<button onClick={() => setColors(newColors)}>색상변경</button>
 		</>
 	);
 }
