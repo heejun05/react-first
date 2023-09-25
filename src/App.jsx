@@ -1,8 +1,10 @@
-import Footer from './components/Footer';
-import Header from './components/Header';
-import List from './components/List';
-import Popup from './components/Popup';
-import './style.scss';
+// 기본
+
+// import Footer from './components/Footer';
+// import Header from './components/Header';
+// import List from './components/List';
+// import Popup from './components/Popup';
+// import './style.scss';
 
 //원시형자료는 : 메모리, 값 자체가 callstack에서 생성된 다음에 저장
 //원시형자료는 변수값을 다른 변수에 복사했을때 값 자체가 복사되는 deep copy;
@@ -18,30 +20,97 @@ import './style.scss';
 //리액트는 원본이 있어야 복사본을 통해서 차이점을 비교분석
 //리액트안에서 배열이나, 객체같은 참조형 자료는 무조건 deep copy를 해서 데이터를 변경해야됨
 
+// function App() {
+// 	let student = {
+// 		name: 'David',
+// 		age: 20,
+// 	};
+
+// 	let newStudent = { ...student };
+// 	newStudent.name = 'Andy';
+// 	console.log(newStudent);
+// 	console.log(student);
+
+// 	let isPop = true;
+// 	let isFooter = false;
+// 	return (
+// 		<>
+// 			<Header />
+// 			{isFooter && <Footer />}
+// 			{isPop ? <Popup /> : null}
+// 			<List />
+// 		</>
+// 	);
+// }
+// export default App;
+
+// 두개중 하나만 실행
+//-----------------------------------------
+// 숫자값 변경
+
+//  import './style.scss';
+
+// import { useState } from 'react';
+
+// function App() {
+// 	console.log('app');
+// 	//const [상태값, 상태변경전용함수] = useState(초기값);
+// 	//리액트 컴포넌트는 State값이 State변경함수로 변경되야지만 컴포넌트가 재랜더링됨
+// 	//숫자를 증가, 감소 시킬때 전위증감 연산자를 써야지만 해당 렌더링 사이클에서 바로 값이 변경되면서 다음번 렌더링에 반영됨
+// 	//State에 담기는 값이 바뀔때에만 화면의 갱신이 일어나기 때문에
+// 	//State에 담기는 데이터만 관리하면 되므로 유지보수가 편함
+
+// 	let [Num, setNum] = useState(0);
+// 	console.log(Num);
+
+// 	return (
+// 		<>
+// 			<h1>{Num}</h1>
+// 			<button onClick={() => setNum(--Num)}>minus</button>
+// 			<button onClick={() => setNum(++Num)}>plus</button>
+// 		</>
+// 	);
+// }
+
+// export default App;
+
+// -----------------------------
+//문자값 변경
+
+import React, { useState } from 'react';
+import './style.scss';
+
 function App() {
-	let student = {
-		name: 'David',
-		age: 20,
-	};
-
-	let newStudent = { ...student };
-	newStudent.name = 'Andy';
-	console.log(newStudent);
-	console.log(student);
-
-	let isPop = true;
-	let isFooter = false;
+	const [Degree, setDegree] = useState(0);
 	return (
 		<>
-			<Header />
-			{isFooter && <Footer />}
-			{isPop ? <Popup /> : null}
-			<List />
+			<button onClick={() => setDegree(Degree - 45)}>왼쪽으로 회전</button>
+			<button onClick={() => setDegree(Degree + 45)}>오른쪽으로 회전</button>
+			<article style={{ transform: `rotate(${Degree}deg)` }}>{Degree}</article>
 		</>
 	);
 }
 
 export default App;
+
+/*
+	hooks
+	- 리액트 16버전부터 새로나온 개념으로 리액트에서 자주쓰이는 상태관리, 생명주기에 관련된 내용들을 
+	- hook이라는 형태의 내장함수로 편의기능을 제공
+	- hook이 나오기 전까지는 class방식으로 컴포넌트를 생성 및 기능확장을 비효율적으로 처리 
+
+	자주쓰는 hook 3대장 
+	useState - 컴포넌트의 화면의 랜더링을 담당하는 중요한 정보값 관리 
+	useEffect - 컴포넌트의 생명주기에 관련된 함수 (생성, 변화, 소멸)
+	userRef - 컴퓨넌트 안쪽에서 특정 값을 참조객체에 담을때 
+
+	리액트의 성능관리를 hook
+	리액트에서 memoization - 메모리점유율을 늘려서 성능 개선
+	자바스크립트는 기본적으로 Garbage Collector에 의해서 메모리가
+	memo (컴퓨넌트 자체를 메모이제이션)
+	userCallback (컴포넌트 안쪽에 핸들러 함수 자체를 메모이제이션)
+	userMemo (특정 핸들러함수 리턴값을 메모이제이션)
+*/
 
 /*
 	SSR vs CSR
